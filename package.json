@@ -1,6 +1,6 @@
 {
   "name": "cbc",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "start": "ts-node scripts/dev-server.ts",
     "dev": "vite",
