@@ -1,6 +1,8 @@
 # cbc
 
-## 1.0.0 install vite with template vue-ts
+## V0.0.0
+
+### 0-1. install vite with template vue-ts
 
 参考: https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project
 
@@ -17,7 +19,9 @@ npm run build
 npm run preview
 ```
 
-## github
+## V0.1.0
+
+### 1-1. 上传 github
 
 ```bash
 # 在 github 上创建一个新项目 cbc
@@ -32,7 +36,95 @@ npm version minor
 git push --follow-tags
 ```
 
------------------------------------------------------------------------
+## V0.2.0
+
+### 2-1. 调整 `src` 结构
+
+```bash
+# 新建 `src/main/index.ts` - 主进程入口文件
+# 新建 `src/renderer` 目录 - 渲染进程
+# 把 `vue` 相关的文件全部移动到 `renderer` 目录
+# `src/renderer` 目录结构:
+- renderer
+|- assets
+|- components
+|- App.vue
+|- env.d.ts
+|- index.html
+|- main.ts
+
+# 修改 index.html 文件:
+# 将 `<script type="module" src="/src/main.ts"></script>`
+# 改为 `<script type="module" src="/main.ts"></script>`
+# 注意: `/main.ts` 要保留前面的斜杠
+
+# fix `npm run dev` 找不到页面的问题
+npm i -D @types/node
+```
+
+### 2-2. 修改 `vite.config.ts`
+
+```ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
++ import path from 'path';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  + root: path.join(__dirname, 'src', 'renderer'),
+  plugins: [vue()]
+})
+```
+
+### 2-3. 调整 build 后 `dist` 目录结构
+
+```bash
+目标结构:
+- dist
+|- main
+  |- index.js
+|- renderer
+  |- assets
+  |- favicon.ico
+  |- index.html
+```
+
+### 2-4. 修改 `vite.config.ts`
+
+```ts
+...
+export default defineConfig({
+  root: path.join(__dirname, 'src', 'renderer'),
+  + publicDir: path.join(__dirname, 'public'),
+  + build: {
+    + outDir: path.join(__dirname, 'dist', 'renderer')
+  + },
+  plugins: [vue()]
+})
+```
+
+### 2-5. Prettier 漂亮格式
+
+```bash
+# 安装 `vscode` `Prettier - Code formatter` 插件
+# npm
+npm i -D prettier
+# .vscode/settings.json
+# .prettierrc.json
+```
+
+### 2-6. Eslint 语法检查
+
+```bash
+npm i -D eslint eslint-plugin-import @typescript-eslint/eslint-plugin @typescript-eslint/parser
+# .eslintrc.json
+# `package.json/script`
+# "lint": "eslint --ext .ts ."
+
+npm run lint
+```
+
+---
 
 # Vue 3 + Typescript + Vite
 
