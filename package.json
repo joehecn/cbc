@@ -14,6 +14,7 @@
     "preview": "vite preview"
   },
   "keywords": [],
+  "repository": "git@github.com:joehecn/cbc.git",
   "author": {
     "name": "joehecn",
     "email": "leanbrown@live.cn"
