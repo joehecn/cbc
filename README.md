@@ -27,6 +27,9 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/joehecn/cbc.git
 git push -u origin main
+
+npm version minor
+git push --follow-tags
 ```
 
 -----------------------------------------------------------------------
