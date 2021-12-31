@@ -1,14 +1,71 @@
 {
   "name": "cbc",
+  "productName": "cbc",
   "version": "0.3.0",
+  "description": "CBC Electron application",
+  "main": "dist/main/index.js",
   "scripts": {
     "start": "ts-node scripts/dev-server.ts",
+    "publish": "npm run lint && npm run build:r && npm run publish:m",
+    "lint": "eslint --ext .ts .",
+    "build:r": "vue-tsc -p tsconfig.renderer.json --noEmit && vite build --emptyOutDir",
+    "publish:m": "tsc -p tsconfig.main.json && electron-forge publish",
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview",
-    "lint": "eslint --ext .ts ."
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": {
+    "name": "joehecn",
+    "email": "leanbrown@live.cn"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "cbc"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "joehecn",
+              "name": "cbc"
+            },
+            "prerelease": false,
+            "draft": false
+          }
+        }
+      ]
+    }
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.61",
+    "@electron-forge/maker-deb": "^6.0.0-beta.61",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.61",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
+    "@electron-forge/maker-zip": "^6.0.0-beta.61",
+    "@electron-forge/publisher-github": "^6.0.0-beta.61",
     "@types/node": "^17.0.5",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",

@@ -5,12 +5,11 @@ import * as childProcess from 'child_process';
 import * as path from 'path';
 import * as chalk from 'chalk';
 import * as chokidar from 'chokidar';
+import * as config from '../tsconfig.renderer.json';
 
 let electronProcess = null;
 
 async function startRenderer() {
-  const config = require(path.join(__dirname, '..', 'tsconfig.renderer.json'));
-
   const server = await vite.createServer({
     ...config,
     mode: 'development'

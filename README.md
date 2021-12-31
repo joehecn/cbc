@@ -157,6 +157,18 @@ npm i electron-squirrel-startup
 
 ```
 
+## V0.4.0
+
+publish
+
+```bash
+# github/workflows/release.yml
+# .gitignore
+# package.json
+# vite.config.ts
+npm i -D @electron-forge/cli @electron-forge/maker-deb @electron-forge/maker-rpm @electron-forge/maker-squirrel @electron-forge/maker-zip @electron-forge/publisher-github
+```
+
 ---
 
 # Vue 3 + Typescript + Vite
