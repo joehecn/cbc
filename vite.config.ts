@@ -6,6 +6,10 @@ import path from 'path';
 export default defineConfig({
   root: path.join(__dirname, 'src', 'renderer'),
   publicDir: path.join(__dirname, 'public'),
+  server: {
+    port: 8080,
+    open: false
+  },
   build: {
     outDir: path.join(__dirname, 'dist', 'renderer')
   },

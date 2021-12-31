@@ -2,6 +2,8 @@
 
 ## V0.0.0
 
+从一个 vite-ts 模版项目开始
+
 ### 0-1. install vite with template vue-ts
 
 参考: https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project
@@ -21,6 +23,8 @@ npm run preview
 
 ## V0.1.0
 
+github 版本管理
+
 ### 1-1. 上传 github
 
 ```bash
@@ -37,6 +41,8 @@ git push --follow-tags
 ```
 
 ## V0.2.0
+
+renderer - 渲染进程
 
 ### 2-1. 调整 `src` 结构
 
@@ -122,6 +128,33 @@ npm i -D eslint eslint-plugin-import @typescript-eslint/eslint-plugin @typescrip
 # "lint": "eslint --ext .ts ."
 
 npm run lint
+```
+
+## V0.3.0
+
+main - 主进程
+
+### 3-1. tsconfig
+
+```bash
+# tsconfig.json
+# tsconfig.main.json
+# tsconfig.renderer.json
+```
+
+### 3-2. npm start
+
+```bash
+# `package.json`
+# "start": "ts-node scripts/dev-server.ts"
+
+npm i -D ts-node chalk@4.1.2 chokidar
+
+npm i -D electron
+node node_modules/electron/install.js
+
+npm i electron-squirrel-startup
+
 ```
 
 ---
