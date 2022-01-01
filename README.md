@@ -169,6 +169,14 @@ publish
 npm i -D @electron-forge/cli @electron-forge/maker-deb @electron-forge/maker-rpm @electron-forge/maker-squirrel @electron-forge/maker-zip @electron-forge/publisher-github
 ```
 
+## V0.5.0
+
+preload and element
+
+```bash
+npm i -D element-plus
+```
+
 ---
 
 # Vue 3 + Typescript + Vite
