@@ -1,7 +1,7 @@
 {
   "name": "cbc",
   "productName": "cbc",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "CBC Electron application",
   "main": "dist/main/index.js",
   "scripts": {
