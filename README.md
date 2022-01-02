@@ -132,7 +132,7 @@ npm run lint
 
 ## V0.3.0
 
-main - 主进程
+- main - 主进程
 
 ### 3-1. tsconfig
 
@@ -157,9 +157,9 @@ npm i electron-squirrel-startup
 
 ```
 
-## V0.4.0
+## V0.5.0
 
-publish
+- publish
 
 ```bash
 # github/workflows/release.yml
@@ -169,12 +169,22 @@ publish
 npm i -D @electron-forge/cli @electron-forge/maker-deb @electron-forge/maker-rpm @electron-forge/maker-squirrel @electron-forge/maker-zip @electron-forge/publisher-github
 ```
 
-## V0.5.0
+## V0.6.0
 
-preload and element
+- preload and element
 
 ```bash
 npm i -D element-plus
+```
+
+## V0.7.0
+
+- 自动更新
+- vue-router and vuex
+
+```bash
+npm i -D vue-router@4
+npm i -D vuex@next
 ```
 
 ---

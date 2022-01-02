@@ -1,5 +1,6 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import * as path from 'path';
+import { __RENDERER_PROMISE_MSG__, __RENDERER_MSG__ } from '../util/config';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 
@@ -15,7 +16,7 @@ const createWindow = (): void => {
     height: 600,
     width: 800,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, '..', 'util', 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true
     }
@@ -61,6 +62,28 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-ipcMain.on('message', (event, message) => {
-  console.log(event, message);
+// ipcMain.on('message', (_, message) => {
+//   console.log(message);
+// });
+
+const ctrlMsg = async (msg: any) => {
+  msg.res = { b: 2 };
+};
+ipcMain.on(__RENDERER_PROMISE_MSG__, async (event, msg) => {
+  await ctrlMsg(msg);
+  console.log(msg);
+  event.reply(msg.eventName, msg);
+});
+
+ipcMain.on(__RENDERER_MSG__, async (_, msg) => {
+  const { key, value } = msg;
+
+  switch (key) {
+    case 'github':
+      shell.openExternal(value);
+      break;
+
+    default:
+      break;
+  }
 });
