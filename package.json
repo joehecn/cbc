@@ -10,6 +10,7 @@
     "lint": "eslint --ext .ts .",
     "build:r": "vue-tsc -p tsconfig.renderer.json --noEmit && vite build --emptyOutDir",
     "publish:m": "tsc -p tsconfig.main.json && electron-forge publish",
+    "make": "tsc -p tsconfig.main.json && electron-forge make",
     "dev": "vite",
     "preview": "vite preview"
   },
