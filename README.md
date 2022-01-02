@@ -177,7 +177,7 @@ npm i -D @electron-forge/cli @electron-forge/maker-deb @electron-forge/maker-rpm
 npm i -D element-plus
 ```
 
-## V0.8.0
+## V0.9.0
 
 - 自动更新
 - vue-router and vuex

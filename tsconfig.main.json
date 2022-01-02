@@ -9,7 +9,7 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "baseUrl": ".",
-    "outDir": "dist/main",
+    "outDir": "dist",
     "paths": {
       "*": ["node_modules/*"]
     }
