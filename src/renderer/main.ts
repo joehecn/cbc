@@ -17,7 +17,7 @@ import { version } from '../../package.json';
 
 import { ArrowLeft, ArrowRight, Loading, Switch } from '@element-plus/icons-vue';
 
-ipc.on((msg) => {
+ipc.on((msg: any) => {
   const { key, value } = msg;
 
   switch (key) {

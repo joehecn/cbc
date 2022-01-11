@@ -9,13 +9,13 @@ const PASSWD = 'Connor';
 const formZionRef = ref<InstanceType<typeof ElForm>>();
 const notif: any = inject('notif');
 
-const isExist = async (url) => {
+const isExist = async (url: string) => {
   const res = await fetch(url, {
     method: 'HEAD'
   });
   return res?.status === 200;
 };
-const checkIsExist = (_, value: string, callback: any) => {
+const checkIsExist = (_: any, value: string, callback: any) => {
   const v = value.trim();
   if (!v.trim()) {
     return callback();
@@ -49,7 +49,7 @@ const router = useRouter();
 const onSubmit = async () => {
   if (!formZionRef) return;
   submiting.value = true;
-  formZionRef.value.validate(async (valid) => {
+  (formZionRef as any).value.validate(async (valid: boolean) => {
     if (valid) {
       const { s2, p2, s3, p3 } = formZion;
       const json = {

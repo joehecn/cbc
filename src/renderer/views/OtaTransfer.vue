@@ -60,7 +60,7 @@ const targetOtaConfigTag = computed(() => {
   let name = '找不到.bin文件';
   let type = 'danger';
 
-  const config = otaConfig[platform.value.target];
+  const config: string = otaConfig[platform.value.target];
   if (config) {
     const index = config.lastIndexOf('/');
     name = config.slice(index + 1);
@@ -72,7 +72,7 @@ const targetOtaConfigTag = computed(() => {
 
 const realDeviceID = ref('');
 
-const _getTaskID = (key) => {
+const _getTaskID = (key: string) => {
   const time = Date.now();
   return `${key}-${time}`;
 };
@@ -105,7 +105,7 @@ const handStep2NextClick = () => {
   realDeviceID.value = '';
 };
 
-const cancelTask = (row) => {
+const cancelTask = (row: any) => {
   // console.log('cancelTask');
   const task = toRaw(row) as Task;
   // 向源平台发送取消指令
@@ -116,7 +116,7 @@ const cancelTask = (row) => {
   ipc.send(msg);
 };
 
-const tableRowClassName = ({ row }) => {
+const tableRowClassName = ({ row }: any) => {
   const task = row as Task;
   if (task.sourceState === STATE_ENUM.CANCEL) {
     return 'warning-row';
