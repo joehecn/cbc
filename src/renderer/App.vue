@@ -11,9 +11,7 @@
   <!-- <el-button>Default</el-button>
   <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" /> -->
-  <el-main class="me-main">
-    <router-view></router-view>
-  </el-main>
+  <router-view></router-view>
 </template>
 
 <style>

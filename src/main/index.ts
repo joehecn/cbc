@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import * as path from 'path';
-import { __RENDERER_PROMISE_MSG__, __RENDERER_MSG__ } from '../util/config';
+import { __MAIN_MSG__, __RENDERER_MSG__, LIFE_ENUM, STATE_ENUM, Task, Msg } from '../util/config';
+import { taskStep1, destorySourceClient, taskStep2 } from './mqtt';
+import mainEmitter from './mainEmitter';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 
@@ -24,17 +26,34 @@ const createWindow = (): void => {
 
   if (IS_DEV) {
     const rendererPort = process.argv[2];
-    const uri = path.join(__dirname, '..', '..', 'dist', 'renderer/');
-    console.log(uri);
+    // const uri = path.join(__dirname, '..', '..', 'dist', 'renderer/');
+    // console.log(uri);
     mainWindow.loadURL(`http://localhost:${rendererPort}`);
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
   } else {
     // and load the index.html of the app.
     mainWindow.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
-    // Open the DevTools for test.
-    // mainWindow.webContents.openDevTools();
   }
+
+  mainEmitter.on('mqtt-handle-msg', (m: Msg<Task>) => {
+    const { key: platform, value } = m;
+    if (platform === 'source') {
+      if (value.sourceState === STATE_ENUM.ONLINE && value.sourceOnlineMsgCount === 1) {
+        taskStep2(value);
+      }
+    } else if (platform === 'target') {
+      if (value.targetState === STATE_ENUM.UPDATE_COMPLETE) {
+        destorySourceClient(value);
+      }
+    }
+
+    const msg: Msg<Task> = {
+      key: 'mqtt-handle-msg',
+      value
+    };
+    mainWindow.webContents.send(__MAIN_MSG__, msg);
+  });
 };
 
 // This method will be called when Electron has finished
@@ -62,19 +81,6 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-// ipcMain.on('message', (_, message) => {
-//   console.log(message);
-// });
-
-const ctrlMsg = async (msg: any) => {
-  msg.res = { b: 2 };
-};
-ipcMain.on(__RENDERER_PROMISE_MSG__, async (event, msg) => {
-  await ctrlMsg(msg);
-  console.log(msg);
-  event.reply(msg.eventName, msg);
-});
-
 ipcMain.on(__RENDERER_MSG__, async (_, msg) => {
   const { key, value } = msg;
 
@@ -82,7 +88,15 @@ ipcMain.on(__RENDERER_MSG__, async (_, msg) => {
     case 'github':
       shell.openExternal(value);
       break;
-
+    case 'send-ota-cmd-step1':
+      taskStep1(value);
+      break;
+    case 'cancel-ota-cmd':
+      // console.log('case cancel-ota-cmd');
+      value.life = LIFE_ENUM.END;
+      value.sourceState = STATE_ENUM.CANCEL;
+      destorySourceClient(value, true);
+      break;
     default:
       break;
   }

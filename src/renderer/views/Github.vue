@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
-import { useStore } from 'vuex';
+import { useStore } from '../store';
+import { Msg } from '../../util/config';
 
 export default defineComponent({
   setup() {
@@ -9,7 +10,11 @@ export default defineComponent({
     const ipc: any = inject('ipc');
 
     const gotoDownloadPage = () => {
-      ipc.send({ key: 'github', value: github.html_url });
+      const msg: Msg<string> = {
+        key: 'github',
+        value: github.html_url
+      };
+      ipc.send(msg);
     };
 
     return {

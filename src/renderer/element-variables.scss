@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.el-header {
+  display: flex;
+  align-items: center;
+}
+
+.el-transfer > .el-transfer__buttons {
+  display: inline-flex;
+}
+
+.el-transfer-panel__header .el-checkbox__input {
+  display: none;
+}
+
+.el-table .warning-row {
+  --el-table-tr-bg-color: var(--el-color-warning-lighter);
+}
+.el-table .success-row {
+  --el-table-tr-bg-color: var(--el-color-success-lighter);
+}

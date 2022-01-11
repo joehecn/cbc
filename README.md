@@ -187,7 +187,9 @@ npm i -D vue-router@4
 npm i -D vuex@next
 ```
 
----
+```bash
+# http://fusquare-server.cloud-building.fun:3000/ota/zion/ZION_FW_2.1.1.bin
+```
 
 # Vue 3 + Typescript + Vite
 
@@ -200,3 +202,24 @@ This template should help get you started developing with Vue 3 and Typescript i
 ## Type Support For `.vue` Imports in TS
 
 Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+
+正式环境 2.0：{"link":"https://fusquare-server.cloud-building.com/ota/zion/ZION_FW_2.1.20.bin"}
+
+正式环境 3.0：{"link":"http://fusquare-server.cloud-building.fun:3000/ota/zion/ZION_FW_2.0.33.bin"}
+
+测试环境 2.0：{"link":"http://fusquare-server.cloud-building.fun:3000/ota/zion/ZION_FW_2.0.30.bin"}
+Z00000000366
+
+测试环境 3.0：{"link":"http://fusquare-server.cloud-building.fun:3000/ota/zion/ZION_FW_2.0.31.bin"}
+
+const brokerUrlMap: any = {
+'2.0 sandbox': 'tcp://fusquare-hardwaremqtt.cloud-building.fun:1883',
+'2.0 product': 'tcp://fusquare-hardwaremqtt.cloud-building.com:1883',
+'3.0 sandbox': 'tcp://cbosv3-sandbox.cloud-building.com:1883',
+'3.0 product': 'tcp://cbosv3.cloud-building.com:1883'
+};
+npx mqtt sub -v -u 'fusquare-server' -P 'Dad6E_a13_3c' -t 'Z00000000366/#' -h 'cbosv3-sandbox.cloud-building.com' -p '1883'
+npx mqtt sub -v -u 'fusquare-server' -P 'Dad6E_a13_3c' -t 'Z00000000366/#' -h 'fusquare-hardwaremqtt.cloud-building.fun' -p '1883'
+
+Connor
+fusquare-server

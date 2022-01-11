@@ -6,7 +6,8 @@ const github = async () => {
       'User-Agent': 'joehecn'
     }
   });
-  return res.json();
+
+  return res?.json();
 };
 
 export default github;
