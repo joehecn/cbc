@@ -106,7 +106,7 @@ const handStep2NextClick = () => {
 };
 
 const cancelTask = (row: any) => {
-  // console.log('cancelTask');
+  console.log('---- cancelTask');
   const task = toRaw(row) as Task;
   // 向源平台发送取消指令
   const msg: Msg<Task> = {
