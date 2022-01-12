@@ -1,4 +1,4 @@
-import * as OSS from 'ali-oss';
+import OSS from 'ali-oss';
 
 // 用户登录名称 yuehwa@1169367905365878.onaliyun.com
 // AccessKey ID LTAI5tSYgFt41JarhKc8sBod
