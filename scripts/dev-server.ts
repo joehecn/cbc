@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'development';
 import * as vite from 'vite';
 import * as childProcess from 'child_process';
 import * as path from 'path';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import * as chokidar from 'chokidar';
 import * as config from '../tsconfig.renderer.json';
 

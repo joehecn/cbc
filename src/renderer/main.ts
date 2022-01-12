@@ -22,7 +22,7 @@ ipc.on((msg: any) => {
 
   switch (key) {
     case 'mqtt-handle-msg':
-      // console.log({ value });
+      console.log({ value });
       store.commit('updateTask', { task: value });
       break;
 
