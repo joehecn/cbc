@@ -50,11 +50,11 @@ export default class Client {
 
   handleMessage(topic: string, payloadBuf: Buffer) {
     const platformType = this.platformType;
-    console.log('------- handleMessage from:', platformType);
+    // console.log('------- handleMessage from:', platformType);
 
     const payloadStr = payloadBuf.toString();
     const payload = JSON.parse(payloadStr);
-    console.log({ topic, payload });
+    // console.log({ topic, payload });
 
     if (platformType === 'source') {
       if (topic === this.topicInfo) {
@@ -130,6 +130,7 @@ export default class Client {
       delete client.messageIdToTopic[topicExits];
     }
   }
+
   unsub(topic: string) {
     this.removeMessageIdToTopic(this.client as any, topic);
   }

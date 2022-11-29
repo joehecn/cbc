@@ -1,8 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 const Home = () => import('../views/Home.vue');
-const OtaConfig = () => import('../views/OtaConfig.vue');
-const OtaTransfer = () => import('../views/OtaTransfer.vue');
+const ZionOtaConfig = () => import('../views/ZionOtaConfig.vue');
+const ZionOtaTransfer = () => import('../views/ZionOtaTransfer.vue');
+const TereoOtaConfig = () => import('../views/TereoOtaConfig.vue');
+const TereoOta = () => import('../views/TereoOta.vue');
 const Github = () => import('../views/Github.vue');
 
 const routes = [
@@ -12,14 +14,24 @@ const routes = [
     component: Home
   },
   {
-    path: '/ota_config',
-    name: 'otaConfig',
-    component: OtaConfig
+    path: '/zion_ota_config',
+    name: 'zionOtaConfig',
+    component: ZionOtaConfig
   },
   {
-    path: '/ota_transfer',
-    name: 'otaTransfer',
-    component: OtaTransfer
+    path: '/zion_ota_transfer',
+    name: 'zionOtaTransfer',
+    component: ZionOtaTransfer
+  },
+  {
+    path: '/tereo_ota_config',
+    name: 'tereoOtaConfig',
+    component: TereoOtaConfig
+  },
+  {
+    path: '/tereo_ota',
+    name: 'tereoOta',
+    component: TereoOta
   },
   {
     path: '/github',

@@ -6,14 +6,14 @@ import { getJSON } from '../service/oss';
 import { Task, Msg, LIFE_ENUM, STATE_ENUM } from '../../util/config';
 
 const PASSWD = 'fusquare-server';
+const password = ref('');
 
 const store = useStore();
 
 const ipc: any = inject('ipc');
 
-const password = ref('');
-
 const active = ref(0);
+
 // ---------------------------------------------
 // Step 1
 const selectPlatformOptions = [
@@ -77,7 +77,7 @@ const _getTaskID = (key: string) => {
   return `${key}-${time}`;
 };
 const handStep2NextClick = () => {
-  const key = 'send-ota-cmd-step1';
+  const key = 'client-send-ota-cmd-step1';
   const target = platform.value.target;
   const link = otaConfig[target];
 
@@ -93,7 +93,7 @@ const handStep2NextClick = () => {
     sourceOnlineMsgCount: 0
   };
 
-  store.commit('addTaskList', { task });
+  store.commit('addTask', { task });
 
   // 向源平台发送升级指令 step1
   const msg: Msg<Task> = {
@@ -110,7 +110,7 @@ const cancelTask = (row: any) => {
   const task = toRaw(row) as Task;
   // 向源平台发送取消指令
   const msg: Msg<Task> = {
-    key: 'cancel-ota-cmd',
+    key: 'client-cancel-ota-cmd',
     value: task
   };
   ipc.send(msg);
@@ -151,14 +151,16 @@ onMounted(async () => {
 <template>
   <el-container>
     <el-header>
-      <el-page-header content="OTA Transfer" @back="goBack" />
+      <el-page-header content="ZION OTA Transfer" @back="goBack" />
     </el-header>
+
     <el-main v-show="password !== PASSWD">
       <div class="password">
         <div style="width: 100px; flex: none">PASSWORD:</div>
         <el-input style="max-width: 200px" v-model="password" type="password" />
       </div>
     </el-main>
+
     <el-main v-show="password === PASSWD">
       <el-steps :active="active" finish-status="success">
         <el-step title="Step 1" description="选择平台"></el-step>

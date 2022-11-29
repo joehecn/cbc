@@ -218,7 +218,11 @@ const brokerUrlMap: any = {
 '3.0 sandbox': 'tcp://cbosv3-sandbox.cloud-building.com:1883',
 '3.0 product': 'tcp://cbosv3.cloud-building.com:1883'
 };
-npx mqtt sub -v -u 'fusquare-server' -P 'Dad6E_a13_3c' -t 'Z00000000366/#' -h 'cbosv3-sandbox.cloud-building.com' -p '1883'
+npx mqtt sub -v -u 'fusquare-server' -P 'Dad6E_a13_3c' -t '#' -h 'cbosv3-sandbox.cloud-building.com' -p '1883'
+
+npx mqtt sub -v -u 'fusquare-server' -P 'Dad6E_a13_3c' -t 'T00000000004/#' -h 'cbosv3-sandbox.cloud-building.com' -p '1883'
+npx mqtt sub -v -u 'fusquare-server' -P 'Dad6E_a13_3c' -t 'T00000000004/#' -h '10.12.1.11' -p '1883'
+
 npx mqtt sub -v -u 'fusquare-server' -P 'Dad6E_a13_3c' -t 'Z00000000366/#' -h 'fusquare-hardwaremqtt.cloud-building.fun' -p '1883'
 
 Connor

@@ -1,11 +1,12 @@
 import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
-import { Task } from '../../util/config';
+import { Task, OtaListRow, LIFE_ENUM } from '../../util/config';
 
 // 为 store state 声明类型
 export interface State {
   github: any;
   taskList: Task[];
+  otaList: OtaListRow[];
 }
 
 // 定义 injection key
@@ -14,14 +15,22 @@ export const key: InjectionKey<Store<State>> = Symbol();
 export const store = createStore<State>({
   state: {
     github: null,
-    taskList: []
+    taskList: [],
+    otaList: [
+      // {
+      //   id: 'T01',
+      //   version: 'aaa',
+      //   state: STATE_ENUM.ONLINE,
+      //   life: LIFE_ENUM.END
+      // }
+    ]
   },
   mutations: {
     setGithub(state, { github }) {
       state.github = github;
     },
 
-    addTaskList(state, { task }) {
+    addTask(state, { task }) {
       state.taskList.push(task);
     },
 
@@ -35,6 +44,22 @@ export const store = createStore<State>({
       }
 
       state.taskList.push(task);
+    },
+
+    updateOta(state, { ota }) {
+      for (let i = 0, len = state.otaList.length; i < len; i++) {
+        const item = state.otaList[i];
+        if (item.id === ota.id) {
+          const _ota = Object.assign(item, ota);
+          state.otaList[i] = _ota;
+          return;
+        }
+      }
+
+      if (!Object.hasOwnProperty.call(ota, 'life')) {
+        ota.life = LIFE_ENUM.END;
+      }
+      state.otaList.push(ota);
     }
   }
 });

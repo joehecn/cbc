@@ -16,14 +16,41 @@ import github from './github';
 import { version } from '../../package.json';
 
 import { ArrowLeft, ArrowRight, Loading, Switch } from '@element-plus/icons-vue';
+import { STATE_ENUM, TP } from '../util/config';
+
+const otaClientHandleMsg = (value: TP) => {
+  const { topic, payloadStr } = value;
+  // console.log({ topic, payloadStr });
+  const topicArr = topic.split('/');
+  const payload = JSON.parse(payloadStr);
+
+  if (topicArr[1] === 'info') {
+    const state = payload.state === 'ONLINE' ? STATE_ENUM.ONLINE : STATE_ENUM.OFFLINE;
+    store.commit('updateOta', {
+      ota: {
+        id: topicArr[0],
+        version: payload.firmware,
+        state
+      }
+    });
+  } else {
+    console.log('------- otaClientHandleMsg');
+    console.log({ topic, payloadStr });
+  }
+};
 
 ipc.on((msg: any) => {
   const { key, value } = msg;
+  // console.log({ key, value });
 
   switch (key) {
     case 'mqtt-handle-msg':
-      console.log({ value });
+      // console.log({ value });
       store.commit('updateTask', { task: value });
+      break;
+    case 'ota-client-handle-msg':
+      // console.log({ value });
+      otaClientHandleMsg(value);
       break;
 
     default:

@@ -2,6 +2,13 @@ export { __J_MAIN__ } from './__J_MAIN__.json';
 export { __MAIN_MSG__ } from './__MAIN_MSG__.json';
 export { __RENDERER_MSG__ } from './__RENDERER_MSG__.json';
 
+export type OtaListRow = {
+  id: string;
+  version: string;
+  state: STATE_ENUM;
+  life?: LIFE_ENUM;
+};
+
 export type Task = {
   taskID: string;
   deviceID: string;
@@ -12,6 +19,17 @@ export type Task = {
   targetState: STATE_ENUM;
   link: string;
   sourceOnlineMsgCount: number;
+};
+
+export type TP = {
+  topic: string;
+  payloadStr: string;
+};
+
+export type MqttMsg = {
+  platform: string;
+  topic: string;
+  payloadStr: string;
 };
 
 export type Msg<T> = {

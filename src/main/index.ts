@@ -1,7 +1,24 @@
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import * as path from 'path';
-import { __MAIN_MSG__, __RENDERER_MSG__, LIFE_ENUM, STATE_ENUM, Task, Msg } from '../util/config';
-import { taskStep1, destorySourceClient, taskStep2 } from './mqtt';
+import {
+  __MAIN_MSG__,
+  __RENDERER_MSG__,
+  LIFE_ENUM,
+  STATE_ENUM,
+  Task,
+  Msg,
+  TP
+} from '../util/config';
+import {
+  // Client
+  taskStep1,
+  destorySourceClient,
+  taskStep2,
+  // Ota Client
+  initOtaClient,
+  sendOtaMsg,
+  destoryOtaClient
+} from './mqtt';
 import mainEmitter from './mainEmitter';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
@@ -54,6 +71,11 @@ const createWindow = (): void => {
     };
     mainWindow.webContents.send(__MAIN_MSG__, msg);
   });
+
+  mainEmitter.on('ota-client-handle-msg', (msg: Msg<TP>) => {
+    // console.log({ msg });
+    mainWindow.webContents.send(__MAIN_MSG__, msg);
+  });
 };
 
 // This method will be called when Electron has finished
@@ -88,14 +110,26 @@ ipcMain.on(__RENDERER_MSG__, async (_, msg) => {
     case 'github':
       shell.openExternal(value);
       break;
-    case 'send-ota-cmd-step1':
+    case 'client-send-ota-cmd-step1':
       taskStep1(value);
       break;
-    case 'cancel-ota-cmd':
-      // console.log('case cancel-ota-cmd');
+    case 'client-cancel-ota-cmd':
       value.life = LIFE_ENUM.END;
       value.sourceState = STATE_ENUM.CANCEL;
       destorySourceClient(value, true);
+      break;
+    case 'otaclient-init':
+      // console.log('otaclient-init', { value });
+      initOtaClient(value);
+      break;
+    case 'otaclient-send-msg': {
+      const { platform, topic, payloadStr } = value;
+      sendOtaMsg(platform, topic, payloadStr);
+      break;
+    }
+    case 'otaclient-destory':
+      // console.log('otaclient-destory', { value });
+      destoryOtaClient(value);
       break;
     default:
       break;

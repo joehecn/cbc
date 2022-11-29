@@ -1,6 +1,9 @@
 import Client from './Client';
 import { Task } from '../../util/config';
 
+import OtaClient from './OtaClient';
+
+/* Client */
 export const taskStep1 = (task: Task) => {
   const { taskID, source } = task;
 
@@ -27,4 +30,27 @@ export const taskStep2 = (task: Task) => {
   // 发送升级指令
   const sourceClient = Client.sourceClientMap[taskID];
   sourceClient.pub(`${deviceID}/ota/cmd`, JSON.stringify({ link }));
+};
+
+/* Ota Client */
+
+const otaClientMap: any = {};
+
+export const initOtaClient = (platform: string) => {
+  if (!otaClientMap[platform]) {
+    otaClientMap[platform] = new OtaClient(platform);
+  }
+};
+
+export const sendOtaMsg = (platform: string, topic: string, payload: string) => {
+  if (otaClientMap[platform]) {
+    otaClientMap[platform].pub(topic, payload);
+  }
+};
+
+export const destoryOtaClient = (platform: string) => {
+  if (otaClientMap[platform]) {
+    otaClientMap[platform].destory();
+    delete otaClientMap[platform];
+  }
 };
