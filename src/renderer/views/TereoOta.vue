@@ -49,7 +49,8 @@ const version = computed(() => {
 
 const handStep2NextClick = () => {
   const link = otaConfig.source;
-  tereoTaskTable.value!.ota(link)
+  const table = tereoTaskTable.value as any;
+  table && table.ota && table.ota(link);
 }
 
 const router = useRouter();
